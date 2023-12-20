@@ -1,6 +1,8 @@
 package testDatabase.M2Database.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import testDatabase.M2Database.model.FirstDto;
@@ -23,8 +25,15 @@ public class FirstController {
         return firstService.getAllFirstDto();
     }
     @GetMapping("/{id}")
-    public FirstDto getById(@PathVariable Integer id) {
-        return firstService.getByIdFirstDto(id);
+    public ResponseEntity<FirstDto> getById(@PathVariable Integer id) {//@CookieValue для получения из куки параметра id
+        FirstDto firstDto = firstService.getByIdFirstDto(id);
+
+        ResponseCookie.from("firstDto", firstDto.getId().toString()).maxAge(600).build();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header(HttpHeaders.SET_COOKIE,firstDto.getName())
+                .body(firstDto);
     }
 
     @PostMapping
