@@ -10,6 +10,8 @@ import testDatabase.M2Database.model.FirstDto;
 import testDatabase.M2Database.service.FirstServiceImpl;
 
 import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @RestController
 @RequestMapping("/rest")
@@ -22,8 +24,8 @@ public class FirstController {
     }
 
     @GetMapping
-    public List<FirstDto> getAllUser(@RequestHeader("Trace-Id") Integer traceId) {
-        log.info("Call with trace id: {}", traceId);
+    public List<FirstDto> getAllUser(@RequestHeader Map<String, String> headers) {
+        log.info("Call with trace id: {}", headers);
         return firstService.getAllFirstDto();
     }
     @GetMapping("/{id}")
