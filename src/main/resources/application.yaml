@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5490/account
+    username: root
+    password: postgres
+    driverClassName: org.postgresql.Driver
+    jpa:
+      show-sql: true
