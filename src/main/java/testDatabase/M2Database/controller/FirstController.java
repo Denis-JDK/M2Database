@@ -1,5 +1,6 @@
 package testDatabase.M2Database.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -9,7 +10,7 @@ import testDatabase.M2Database.model.FirstDto;
 import testDatabase.M2Database.service.FirstServiceImpl;
 
 import java.util.List;
-
+@Slf4j
 @RestController
 @RequestMapping("/rest")
 public class FirstController {
@@ -21,7 +22,8 @@ public class FirstController {
     }
 
     @GetMapping
-    public List<FirstDto> getAllUser() {
+    public List<FirstDto> getAllUser(@RequestHeader("Trace-Id") Integer traceId) {
+        log.info("Call with trace id: {}", traceId);
         return firstService.getAllFirstDto();
     }
     @GetMapping("/{id}")
