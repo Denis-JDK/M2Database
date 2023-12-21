@@ -33,7 +33,7 @@ public class FirstController {
         return firstService.getAllFirstDto();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<FirstDto> getById(@Min(0L) @PathVariable Integer id) {//@CookieValue для получения из куки параметра id
+    public ResponseEntity<FirstDto> getById(@Min(value = 0L, message = "ID должен быть больше 0 ") @PathVariable Integer id) {//@CookieValue для получения из куки параметра id
         FirstDto firstDto = firstService.getByIdFirstDto(id);
 
         ResponseCookie.from("firstDto", firstDto.getId().toString()).maxAge(600).build();
