@@ -11,6 +11,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import testDatabase.M2Database.model.FirstDto;
 import testDatabase.M2Database.service.FirstServiceImpl;
+import testDatabase.M2Database.validation.Create;
+import testDatabase.M2Database.validation.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -44,10 +46,12 @@ public class FirstController {
                 .body(firstDto);
     }
 
+    @Validated(Create.class) //groups для валидации id в FirstDto
     @PostMapping
     public ResponseEntity<FirstDto> create(@Valid @RequestBody FirstDto firstDto) { //@RequestBody указывает что обьект firstDto находится в теле запроса, конвертирует из json в java обьект
        return ResponseEntity.status(HttpStatus.CREATED).body(firstService.create(firstDto)); //ResponseEntity.status(HttpStatus.CREATED) сделали костомный код ответа не просто 200, а 201 CREATE
     }
+    @Validated(Update.class) //groups для валидации id в FirstDto
     @PutMapping
     public FirstDto update(@RequestBody FirstDto firstDto) {
        return firstService.updateFirstDto(firstDto);
